@@ -1,6 +1,9 @@
 name: shell commands
 
-on: [push]
+on:
+  push:
+    tags:
+      - merge-to-master
 
 jobs:
   run-shell-command:
