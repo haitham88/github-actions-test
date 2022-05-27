@@ -1,9 +1,16 @@
-name: shell commands
+name: Actions Workflow
 
-on: [push]
+on:
+  push:
+    # tags:
+    #   - merge-to-master
+  pull_request:
+    types:
+      - labeled
 
 jobs:
   run-shell-command:
+    if: ${{ github.event.label.name == 'merge-to-master' }}
     runs-on: ubuntu-latest
     steps:
       - name: echo a string
