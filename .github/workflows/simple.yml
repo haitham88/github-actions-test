@@ -4,9 +4,13 @@ on:
   push:
     tags:
       - merge-to-master
+  pull_request:
+    types:
+      - labeled
 
 jobs:
   run-shell-command:
+    if: ${{ github.event.label.name == 'merge-to-master' }}
     runs-on: ubuntu-latest
     steps:
       - name: echo a string
@@ -15,25 +19,25 @@ jobs:
         run: |
           node -v
           npm -v
-  windows-commands:
-    runs-on: windows-latest
-    steps:
-      - name: path of directory
-        run: Get-Location
-  second-windows-commands:
-    runs-on: windows-latest
-    needs: [windows-commands]
-    steps:
-      - name: path of directory pwd
-        run: pwd
-        shell: bash
-  run-github-actions:
-    runs-on: ubuntu-latest
-    steps:
-      - name: javascript actions
-        id: greet
-        uses: actions/hello-world-javascript-action@v1
-        with:
-          who-to-greet: Haitham
-      - name: log greeting
-        run: echo "${{ steps.greet.outputs.time }}"
+  # windows-commands:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: path of directory
+  #       run: Get-Location
+  # second-windows-commands:
+  #   runs-on: windows-latest
+  #   needs: [windows-commands]
+  #   steps:
+  #     - name: path of directory pwd
+  #       run: pwd
+  #       shell: bash
+  # run-github-actions:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: javascript actions
+  #       id: greet
+  #       uses: actions/hello-world-javascript-action@v1
+  #       with:
+  #         who-to-greet: Haitham
+  #     - name: log greeting
+  #       run: echo "${{ steps.greet.outputs.time }}"
